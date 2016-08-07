@@ -1,8 +1,23 @@
 package fm.dex.di;
 
-/**
- * Created by hotchemi on 8/7/16.
- */
+import android.app.Application;
+import android.content.Context;
 
-public class AppModule {
+import dagger.Module;
+import dagger.Provides;
+
+@Module
+public final class AppModule {
+
+    private final Context context;
+
+    public AppModule(Application application) {
+        context = application.getApplicationContext();
+    }
+
+    @Provides
+    public Context provideContext() {
+        return context;
+    }
+
 }
