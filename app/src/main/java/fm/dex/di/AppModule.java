@@ -3,8 +3,6 @@ package fm.dex.di;
 import android.app.Application;
 import android.content.Context;
 
-import org.greenrobot.greendao.database.Database;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -75,7 +73,6 @@ public final class AppModule {
     @Provides
     DaoSession provideDaoSession(Context context) {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, DB_NAME);
-        Database db = helper.getWritableDb();
-        return new DaoMaster(db).newSession();
+        return new DaoMaster(helper.getWritableDb()).newSession();
     }
 }
