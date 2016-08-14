@@ -6,6 +6,8 @@ import rx.Observable;
 
 public interface ApiService {
 
+    String BASE_URL = "https://raw.githubusercontent.com";
+
     String API_PATH = "dexfm/dexfm.github.io/master/api/";
 
     @GET(API_PATH + "feeds.json")
