@@ -1,4 +1,4 @@
-package fm.dex.ui.view;
+package fm.dex.view.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
