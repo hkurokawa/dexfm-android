@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import fm.dex.DexFmApp
 
 import javax.inject.Inject
 
@@ -16,28 +17,34 @@ import rx.schedulers.Schedulers
 class DashboardFragment : BaseFragment() {
 
     @Inject
-    internal var apiService: ApiService? = null
+    lateinit var apiService: ApiService
 
     @Inject
-    internal var daoSession: DaoSession? = null
+    lateinit var daoSession: DaoSession
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        val application = activity.application as DexFmApp
+        application.component.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        //        binding = FragmentSessionsBinding.inflate(inflater, container, false);
         return null
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        apiService!!.feeds
+//        feeds()
     }
 
-    internal val feeds: Subscription
-        get() = apiService!!.feeds.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+    private fun feeds(): Subscription {
+        return apiService.feeds().
+                subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+    }
 
     companion object {
 

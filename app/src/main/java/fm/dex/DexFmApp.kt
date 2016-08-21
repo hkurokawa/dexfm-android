@@ -8,8 +8,7 @@ import fm.dex.di.DaggerAppComponent
 
 class DexFmApp : Application() {
 
-    var component: AppComponent? = null
-        private set
+    lateinit var component: AppComponent
 
     override fun onCreate() {
         super.onCreate()
