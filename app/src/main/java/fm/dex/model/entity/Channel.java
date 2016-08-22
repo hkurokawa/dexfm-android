@@ -1,11 +1,11 @@
 package fm.dex.model.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public final class Channel {
+public class Channel {
 
     @NotNull
     private String title;
@@ -75,8 +75,8 @@ public final class Channel {
 
     @Generated(hash = 1039619931)
     public Channel(@NotNull String title, @NotNull String description,
-                   @NotNull String link, @NotNull String rss, @NotNull String thumbnail,
-                   @NotNull String keywords) {
+            @NotNull String link, @NotNull String rss, @NotNull String thumbnail,
+            @NotNull String keywords) {
         this.title = title;
         this.description = description;
         this.link = link;

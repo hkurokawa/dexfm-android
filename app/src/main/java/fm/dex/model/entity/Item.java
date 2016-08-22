@@ -1,18 +1,17 @@
 package fm.dex.model.entity;
 
-import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
 
-import java.util.Date;
 import java.util.List;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.DaoException;
 
 @Entity
-public final class Item {
+public class Item {
 
     @Id
     private long id;
@@ -31,7 +30,7 @@ public final class Item {
     private String link;
 
     @NotNull
-    private Date pubDate;
+    private String pubDate;
 
     @ToMany(referencedJoinProperty = "id")
     private List<Contributor> contributor;
@@ -81,9 +80,7 @@ public final class Item {
         myDao.delete(this);
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 1495664550)
     public synchronized void resetContributor() {
         contributor = null;
@@ -103,7 +100,7 @@ public final class Item {
             ContributorDao targetDao = daoSession.getContributorDao();
             List<Contributor> contributorNew = targetDao._queryItem_Contributor(id);
             synchronized (this) {
-                if (contributor == null) {
+                if(contributor == null) {
                     contributor = contributorNew;
                 }
             }
@@ -111,24 +108,18 @@ public final class Item {
         return contributor;
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 881068859)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getItemDao() : null;
     }
 
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 182764869)
     private transient ItemDao myDao;
 
-    /**
-     * Used to resolve relations
-     */
+    /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
@@ -156,12 +147,8 @@ public final class Item {
         this.duration = duration;
     }
 
-    public Date getPubDate() {
+    public String getPubDate() {
         return this.pubDate;
-    }
-
-    public void setPubDate(Date pubDate) {
-        this.pubDate = pubDate;
     }
 
     public String getLink() {
@@ -204,11 +191,14 @@ public final class Item {
         this.id = id;
     }
 
-    @Generated(hash = 1603708773)
-    public Item(long id, @NotNull String title, @NotNull String subTitle,
-                @NotNull String description, @NotNull String link,
-                @NotNull Date pubDate, @NotNull String duration, long fileSize,
-                @NotNull String enclosure) {
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
+    }
+
+    @Generated(hash = 1919618937)
+    public Item(long id, @NotNull String title, @NotNull String subTitle, @NotNull String description,
+            @NotNull String link, @NotNull String pubDate, @NotNull String duration, long fileSize,
+            @NotNull String enclosure) {
         this.id = id;
         this.title = title;
         this.subTitle = subTitle;

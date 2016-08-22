@@ -1,12 +1,12 @@
 package fm.dex.model.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
+import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public final class Contributor {
+public class Contributor {
 
     @Id(autoincrement = true)
     private long id;
