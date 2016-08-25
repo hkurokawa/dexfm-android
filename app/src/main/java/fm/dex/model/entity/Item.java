@@ -10,10 +10,6 @@ import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.List;
 
-import fm.dex.model.entity.ContributorDao;
-import fm.dex.model.entity.DaoSession;
-import fm.dex.model.entity.ItemDao;
-
 @Entity
 public class Item {
 
