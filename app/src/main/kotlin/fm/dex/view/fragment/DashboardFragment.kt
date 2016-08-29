@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pushtorefresh.storio.sqlite.StorIOSQLite
 import fm.dex.DexFmApp
 
 import javax.inject.Inject
 
 import fm.dex.model.api.ApiService
-import fm.dex.model.entity.DaoSession
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -20,7 +20,7 @@ class DashboardFragment : BaseFragment() {
     lateinit var apiService: ApiService
 
     @Inject
-    lateinit var daoSession: DaoSession
+    lateinit var sqLite: StorIOSQLite
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,6 @@ class DashboardFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        feeds()
     }
 
     private fun feeds(): Subscription {
