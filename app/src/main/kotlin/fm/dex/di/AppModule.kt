@@ -8,10 +8,7 @@ import javax.inject.Singleton
 import dagger.Module
 import dagger.Provides
 import fm.dex.model.BASE_URL
-import fm.dex.model.DB_NAME
 import fm.dex.model.api.ApiService
-import fm.dex.model.entity.DaoMaster
-import fm.dex.model.entity.DaoSession
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
@@ -67,20 +64,7 @@ class AppModule(application: Application) {
 
     @Singleton
     @Provides
-    fun provideDaoSession(context: Context): DaoSession {
-        val helper = DaoMaster.DevOpenHelper(context, DB_NAME)
-        return DaoMaster(helper.writableDb).newSession()
+    fun provideDaoSession(context: Context): Int {
+        return 1
     }
-
-//    @Singleton
-//    @Provides
-//    fun provideChannelDao(daoSession: DaoSession): ChannelDao {
-//        return daoSession.channelDao
-//    }
-//
-//    @Singleton
-//    @Provides
-//    fun provideItemDao(daoSession: DaoSession): ItemDao {
-//        return daoSession.itemDao
-//    }
 }

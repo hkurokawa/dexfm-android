@@ -47,7 +47,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.9'
     compile 'io.reactivex:rxandroid:1.2.1'
 
-    compile 'org.greenrobot:greendao:3.1.0'
+    compile 'com.pushtorefresh.storio:sqlite:1.10.0'
 
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
