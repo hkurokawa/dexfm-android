@@ -2,16 +2,22 @@ package fm.dex.di
 
 import android.app.Application
 import android.content.Context
+import android.database.sqlite.SQLiteOpenHelper
+import com.pushtorefresh.storio.sqlite.SQLiteTypeMapping
+import com.pushtorefresh.storio.sqlite.StorIOSQLite
+import com.pushtorefresh.storio.sqlite.impl.DefaultStorIOSQLite
 
 import javax.inject.Singleton
 
 import dagger.Module
 import dagger.Provides
 import fm.dex.model.BASE_URL
-import fm.dex.model.DB_NAME
 import fm.dex.model.api.ApiService
-import fm.dex.model.entity.DaoMaster
-import fm.dex.model.entity.DaoSession
+import fm.dex.model.db.DbOpenHelper
+import fm.dex.model.entities.Channel
+import fm.dex.model.entities.Contributor
+import fm.dex.model.entities.Item
+import fm.dex.model.db.resolvers.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
@@ -65,22 +71,32 @@ class AppModule(application: Application) {
         return retrofit.create(ApiService::class.java)
     }
 
-    @Singleton
     @Provides
-    fun provideDaoSession(context: Context): DaoSession {
-        val helper = DaoMaster.DevOpenHelper(context, DB_NAME)
-        return DaoMaster(helper.writableDb).newSession()
+    @Singleton
+    fun provideStorIOSQLite(sqLiteOpenHelper: SQLiteOpenHelper): StorIOSQLite {
+        return DefaultStorIOSQLite.builder()
+                .sqliteOpenHelper(sqLiteOpenHelper)
+                .addTypeMapping(Channel::class.java, SQLiteTypeMapping.builder<Channel>()
+                        .putResolver(ChannelPutResolver())
+                        .getResolver(ChannelGetResolver())
+                        .deleteResolver(ChannelDeleteResolver())
+                        .build())
+                .addTypeMapping(Contributor::class.java, SQLiteTypeMapping.builder<Contributor>()
+                        .putResolver(ContributorPutResolver())
+                        .getResolver(ContributorGetResolver())
+                        .deleteResolver(ContributorDeleteResolver())
+                        .build())
+                .addTypeMapping(Item::class.java, SQLiteTypeMapping.builder<Item>()
+                        .putResolver(ItemPutResolver())
+                        .getResolver(ItemGetResolver())
+                        .deleteResolver(ItemDeleteResolver())
+                        .build())
+                .build()
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideChannelDao(daoSession: DaoSession): ChannelDao {
-//        return daoSession.channelDao
-//    }
-//
-//    @Singleton
-//    @Provides
-//    fun provideItemDao(daoSession: DaoSession): ItemDao {
-//        return daoSession.itemDao
-//    }
+    @Provides
+    @Singleton
+    fun provideSQLiteOpenHelper(context: Context): SQLiteOpenHelper {
+        return DbOpenHelper(context)
+    }
 }
